@@ -1,0 +1,27 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  main:
+    name: ${{ matrix.os }} ${{ matrix.build-type }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest']
+        build-type: ['Debug', 'Release']
+  
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: sudo apt-get install libnetcdf-dev libnetcdff-dev nco
+    
+    - name: Install ecRad
+      run: |
+        if [ ${{ matrix.build-type }} = 'Debug' ]; then export DEBUG=1; fi
+        make PROFILE=gfortran
+    
+    - name: Run tests
+      run: make test
