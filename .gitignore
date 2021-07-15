@@ -4,3 +4,9 @@
 *_out.nc
 config_*.nam
 *_sza.nc
+mod/
+driver/test_spartacus_math
+bin/ecrad
+practical/ecrad
+practical/data
+test/ifs/inputs.nc
